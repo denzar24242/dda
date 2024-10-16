@@ -159,15 +159,27 @@
         <!-- Video Selection List -->
         <div class="video-list">
             <button onclick="changeVideo('https://www.youtube.com/embed/3kr7FBr5I6k')">Video 1</button>
-            <button onclick="changeVideo('https://www.youtube.com/embed/bN853x6hz3E')">Video 2</button>
+            <button onclick="changeVideo('images/???.mp4', true)">?????</button>
             <button onclick="changeVideo('https://www.youtube.com/embed/fsZLz1jS2OM')">Video 3</button>
             <button onclick="changeVideo('https://www.youtube.com/embed/cNIYvOpTsh8')">Video 4</button>
         </div>
         <script>
-            function changeVideo(videoUrl) {
-                document.getElementById('video-player').src = videoUrl;
-            }
-            </script>
+    function changeVideo(videoUrl, isLocal = false) {
+        const videoPlayer = document.getElementById('video-player');
+        if (isLocal) {
+            // For local videos, switch from iframe to HTML5 video player
+            videoPlayer.outerHTML = `
+                <video id="video-player" controls width="560" height="315">
+                    <source src="${videoUrl}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            `;
+        } else {
+            // For embedded YouTube videos
+            videoPlayer.outerHTML = `<iframe id="video-player" src="${videoUrl}" frameborder="0" allowfullscreen></iframe>`;
+        }
+    }
+</script>
             
     </div>
     
